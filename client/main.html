@@ -1,0 +1,117 @@
+<head>
+  <title>NoteApp</title>
+</head>
+
+<body>
+          {{#if currentUser}}
+            {{> home}}
+          {{else}}
+          <div class="container">
+          <h1 class="text-center">NoteApp</h1>
+            {{> atForm}}
+          </div>
+          {{/if}}
+</body>
+
+<template name="home">
+  {{> navbar }}
+
+  <div class="container">
+
+  <!-- Formulaire -->
+
+  {{> form_new_note}}
+
+  <!-- Liste des notes -->
+
+  {{> list_note}}
+
+  </div>
+</template>
+
+<template name="navbar">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">NoteApp</a>
+          </div>
+      
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a class="js-logout" href="#">Déconnexion</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+</template>
+
+<template name="form_new_note">
+  <div class="row">
+    <div class="col-sm-offset-2 col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <!-- Formulaire -->
+          <form class="js-new-note">
+            <input class="form-control" type="text" name="title" placeholder="Titre de la note">
+            <br>
+            <textarea class="form-control" name="description" cols="80" rows="4" placeholder="Texte de la note"></textarea>
+            <br>
+            <button class="btn btn-primary" type="submit" name="button">Ajouter</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="list_note">
+  <h1 class="text-center">Listes des notes</h1>
+  {{#each note in notes}}
+    {{> single_note note=note}}
+    {{else}}
+    <h1 class="text-center">Aucune note</h1>
+  {{/each}}
+</template>
+
+<template name="single_note">
+  <div class="row">
+    <div class="col-sm-offset-2 col-sm-8">
+      <div class="panel panel-default js-edit-note" style="cursor:pointer;">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{note.title}}</h3>
+        </div>
+        <div class="panel-body">
+            <p>{{note.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="modal_edit_note">
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+                <form class="js-edit-note">
+                    <input class="form-control" type="text" name="title" value="{{note.title}}">
+                    <br>
+                    <textarea class="form-control" name="description" cols="80" rows="4">{{note.description}}</textarea>
+                    <br>
+                    <div class="text-right">
+                        <button class="btn btn-danger js-delete-note pull-left" type="button" name="button">Supprimer</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button class="btn btn-primary" type="submit" name="button">Mettre à jour</button>
+                    </div>
+                  </form>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+</template>

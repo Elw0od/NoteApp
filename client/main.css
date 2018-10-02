@@ -1,0 +1,11 @@
+textarea {
+  resize: vertical;
+}
+
+p {
+  white-space: pre;
+}
+
+.form-control {
+  margin-bottom: 5px;
+}
